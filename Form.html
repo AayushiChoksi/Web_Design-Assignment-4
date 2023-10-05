@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Feedback</title>
+    <style>
+        label {
+            float: left;
+            width: 150px;
+        }
+
+        #container {
+            width: 700px;
+            margin: auto;
+            background-color: beige;
+        }
+
+        main {
+            padding: 50px;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,thead,
+        td {
+            border: 2px solid black;
+            padding: 6px;
+            font-size: 18px;
+        }
+
+        table th,thead {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            color: black;
+        }
+
+        .table-header {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .error {
+            color: red;
+        }
+        .tablecaption{
+            font-size: 18px;
+            text-align: center;
+            color: black;
+
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="output"></div>
+        <main>
+            <h2>Feedback</h2>
+            <h3>Love something? Hate something? Let us know!</h3>
+            Note: Fields marked with an asterisk(*) are mandatory
+            <form id="myForm" method="post" novalidate onsubmit="return validateForm();">
+                <br /><br>
+
+                <label>Title*:</label>
+                <input type="radio" name="title" id="miss" value="miss" required="required" />Miss
+                <input type="radio" name="title" id="mr" value="mr" required="required" />Mr.
+                <input type="radio" name="title" id="mrs" value="mrs" required="required" />Mrs.
+                <span id="titleError" class="error"></span>
+                <br /><br>
+
+                <label for="firstName">First Name*:</label>
+                <input type="text" name="firstName" class="required" id="firstName" required
+                    oninput="validateField('firstName', 'First Name is required.', 2, 30, true)">
+                <span id="firstNameError" class="error"></span>
+                <br /><br>
+
+                <label for="lastName">Last Name*:</label>
+                <input type="text" name="lastName" id="lastName" required
+                    oninput="validateField('lastName', 'Last Name is required.', 2, 30, true)">
+                <span id="lastNameError" class="error"></span>
+                <br /><br>
+
+                <label for="emailId">Email Id*:</label>
+                <input type="text" name="emailId" id="emailId" required
+                    oninput="validateEmail('emailId', 'Invalid Email Address. Only @northeastern.edu is allowed.')">
+                <span id="emailIdError" class="error"></span>
+                <br /><br>
+
+                <label for="phoneNumber">Phone Number*:</label>
+                <input type="text" name="phoneNumber" id="phoneNumber" required
+                    oninput="validatePhoneNumber('phoneNumber', 'Invalid Phone Number (use xxx-xxx-xxxx format).')">
+                <span id="phoneNumberError" class="error"></span>
+                <br /><br>
+
+                <label for="streetAddress1">Street Address 1*:</label>
+                <input type="text" name="streetAddress1" id="streetAddress1" required
+                    oninput="validateField('streetAddress1', 'Street Address is required.', 2, 130, true)">
+                <span id="streetAddress1Error" class="error"></span>
+                <br /><br>
+
+                <label for="streetAddress2">Street Address 2:</label>
+                <input type="text" name="streetAddress2" id="streetAddress2">
+                <span id="streetAddress2Error" class="error"></span>
+                <br /><br>
+
+                <label for="city">City*:</label>
+                <input type="text" name="city" id="city" required
+                    oninput="validateField('city', 'City is required.', 2, 30, true)">
+                <span id="cityError" class="error"></span>
+                <br /><br>
+
+                <label for="state">State*:</label>
+                <input type="text"  name="state" id="state" required
+                    oninput="validateField('state', 'State is required.', 2, 30, true)">
+                <span id="stateError" class="error"></span>
+                <br /><br>
+
+                <label for="zipcode">ZipCode*:</label>
+                <input type="text"  name="zipcode" id="zipcode" required
+                    oninput="validateZipCode('zipcode', 'Invalid Zip Code.')">
+                <span id="zipcodeError" class="error"></span>
+                <br /><br>
+
+                <label for="category">Feedback Category*:</label>
+                <select name="category" id="category" required onchange="updateCheckbox(); enableSubmit()";>
+                    <option value="" disabled selected>Select category</option>
+                    <option value="foodQuality">Food Quality</option>
+                    <option value="service">Service</option>
+                    <option value="ambiance">Ambiance</option>
+                    <option value="cleanliness">Cleanliness</option>
+                    <option value="value for money">Value For Money</option>
+                </select>
+                <span id="categoryError" class="error"></span>
+                <br /><br>
+
+                
+
+                <div id="checkboxContainer"></div>
+
+                <div id="textFieldContainer"></div>
+
+                <label for="comments">Comments*:</label>
+                <textarea name="text" id="comments" rows="5" cols="25" required oninput="validateField('comments', 'Comments are required.', 2, 100, true)"></textarea>
+                <span id="commentsError" class="error"></span>
+                <br /><br>
+
+                <input type="submit" value="Submit" onclick="return validateForm();" id="submit" disabled>
+                <input type="reset">
+                <br /><br>
+            </form>
+     
+    </div>
+    <br /><br /><br>
+    <div class="table-container">
+        <table id="tableData" style="display: none;">
+            <tr>
+                <caption id="tableCaption">Feedback details</caption>
+                <th>Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email ID</th>
+                <th>Phone Number</th>
+                <th>Street Address 1</th>
+                <th>Street Address 2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip Code</th>
+                <th>Feedback Category</th>
+                
+                <th>Comments</th>
+            </tr>
+        </table>
+        <br /><br />
+    </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
